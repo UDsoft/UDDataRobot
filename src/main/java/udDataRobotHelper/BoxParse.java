@@ -12,12 +12,13 @@ import org.jsoup.select.Elements;
 
 public class BoxParse {
 	
-	private static final String LINKURL = "http://www.spicesofindia.co.uk/acatalog/";
+	private String LINKURL;
 	
 	Document doc;
 	
-	public BoxParse(Document doc) {
+	public BoxParse(Document doc , String linkurl) {
 		this.doc = doc;
+		this.LINKURL = linkurl;
 	}
 	
 	
@@ -74,7 +75,8 @@ public class BoxParse {
 				}
 			
 			for(String urlpage : urlpages){
-				Document docpage = Jsoup.connect(LINKURL + urlpage).get();
+				String tempURL = LINKURL + urlpage;
+				Document docpage = new UDConnect(tempURL,"Mozilla",2000).getDocument();
 				System.out.println("Connectiong to : " + LINKURL + urlpage);
 				Thread.sleep(105);
 				Elements boxs_conts1 = docpage.select("div[class=BoxedCont]");
